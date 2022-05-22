@@ -2,7 +2,7 @@
 
 /**
   * print_str - print string as string
-  * @ap: string to print
+  * @arg: string to print
   * Return: string
   */
 
