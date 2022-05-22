@@ -1,17 +1,17 @@
 #include "main.h"
 /**
   * print_oct - convert decimal number to octal
-  * @arg: argument parameter
+  * @ap: argument parameter
   * Return: pointer to string with octal
   */
 
-char *print_oct(va_list arg)
+char *print_oct(va_list ap)
 {
 	int d, t, c;
 	unsigned int n;
 	char *ptr;
 
-	n = va_arg(arg, unsigned int);
+	n = va_arg(ap, unsigned int);
 
 	t = 0;
 	ptr = (char *)malloc(sizeof(char) * (12));

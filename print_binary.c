@@ -1,16 +1,16 @@
 #include "main.h"
 /**
   * print_binary - convert decimal number to binary
-  * @arg: argument parameter
+  * @ap: argument parameter
   * Return: pointer to string with binary
   */
 
-char *print_binary(va_list arg)
+char *print_binary(va_list ap)
 {
 	int c, d, t, n;
 	char *ptr;
 
-	n = va_arg(arg, int);
+	n = va_arg(ap, int);
 
 	t = 0;
 	ptr = (char *)malloc(sizeof(char) * (32 + 1));

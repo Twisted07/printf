@@ -41,14 +41,14 @@ char *convert_int_to_str(int multiple, int length, int n)
 
 /**
  * print_int - get integer length
- * @arg: argument parameter
+ * @ap: argument parameter
  * Return: string
  **/
-char *print_int(va_list arg)
+char *print_int(va_list ap)
 {
 	int length, multiple, n, temp;
 
-	n = va_arg(arg, int);
+	n = va_arg(ap, int);
 	temp = n;
 	length = 0;
 	multiple = 1;

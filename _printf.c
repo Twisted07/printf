@@ -1,12 +1,11 @@
 #include "main.h"
-#include <stdarg.h>
 
 int _printf(const char *format, ...)
 {
-	va_list arg;
+	va_list ap;
 	char *str, *buffer;
 	int i = 0, j = 0, len = 0, total = 0;
-	char* (*f)(va_list arg);
+	char* (*f)(va_list ap);
 
 	buffer = string_buffer();
 	if (buffer == NULL)
@@ -15,7 +14,7 @@ int _printf(const char *format, ...)
 	if (format == NULL)
 		return (-1);
 
-	va_start(arg, format);
+	va_start(ap, format);
 
 
 	while (format[i] != '\0')
@@ -33,7 +32,7 @@ int _printf(const char *format, ...)
 			i++;
 			if (format[i] == '\0')
 			{
-				va_end(arg);
+				va_end(ap);
 				free(buffer);
 				return (-1);
 			}
@@ -58,10 +57,10 @@ int _printf(const char *format, ...)
 				}
 				else
 				{
-					str = f(arg);
+					str = f(ap);
 					if (str == NULL)
 					{
-						va_end(arg);
+						va_end(ap);
 						free(buffer);
 						return (-1);
 					}
@@ -90,6 +89,6 @@ int _printf(const char *format, ...)
 
 	}
 
-	realloc_buffer(buffer, len, arg);
+	realloc_buffer(buffer, len, ap);
 	return (total);
 }

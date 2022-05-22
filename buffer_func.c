@@ -20,7 +20,7 @@ char *string_buffer(void)
  * @len: length of string to output
  * @ap: va_list (argument parameters)
  */
-void realloc_buffer(char *buffer, int len, va_list arg)
+void realloc_buffer(char *buffer, int len, va_list ap)
 {
 	char *buffer_new;
 
@@ -28,7 +28,7 @@ void realloc_buffer(char *buffer, int len, va_list arg)
 	write(1, buffer_new, len);
 
 	free(buffer_new);
-	va_end(arg);
+	va_end(ap);
 }
 
 

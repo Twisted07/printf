@@ -1,20 +1,20 @@
 #include "main.h"
 /**
   * print_hex - convert decimal number to hexadecimal
-  * @arg: argument parameter
+  * @ap: argument parameter
   * Return: pointer to string with hexadecimal
   */
 
-char *print_hex(va_list arg)
+char *print_hex(va_list ap)
 {
 	static char hex[] = "0123456789ABCDEF";
 	static char *ptr;
 	unsigned int n;
 	int i = 0;
 
-	n = va_arg(arg, unsigned int);
+	n = va_arg(ap, unsigned int);
 
-
+	
 	ptr = (char *)malloc(sizeof(char) * (12));
 	*ptr = '\0';
 

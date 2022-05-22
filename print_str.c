@@ -2,16 +2,16 @@
 
 /**
   * print_str - print string as string
-  * @arg: string to print
+  * @ap: string to print
   * Return: string
   */
 
-char *print_str(va_list arg)
+char *print_str(va_list ap)
 {
 	char *ptr, *str, *copy_string;
 	int str_len;
 
-	str = va_arg(arg, char*);
+	str = va_arg(ap, char*);
 	if (str == NULL)
 		str = "(null)";
 

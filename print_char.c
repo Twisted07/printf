@@ -2,16 +2,16 @@
 
 /**
   * print_char - print char as string
-  * @arg: char to print
+  * @ap: char to print
   * Return: string
   */
 
-char *print_char(va_list arg)
+char *print_char(va_list ap)
 {
 	char *ptr;
 	char c;
 
-	c = va_arg(arg, int);
+	c = va_arg(ap, int);
 	if (c == 0)
 		c = '\0';
 	ptr = malloc(sizeof(char) * 2);
