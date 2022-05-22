@@ -1,73 +1,95 @@
+#include "main.h"
 #include <stdarg.h>
-/**
-* convert - coverts inputs to base 10
-* @ptr: stores the data
-* Return: ptr
-*/
 
-char *convert(unsigned int num, int base)
-{
-	static char Representation[] = "0123456789ABCDEF";
-	static char buffer[50];
-	char *ptr;
-
-	ptr = &buffer[49];
-	*ptr = '\0';
-
-	do
-	{
-		*--ptr = Representation[num%base];
-		num /= base;
-	while (num != 0);
-
-	return (ptr);
-	}
-}
-
-/**
-* _printf - a function that prints out the arguments passed through it
-* 
-*/
 int _printf(const char *format, ...)
 {
-	int n_displayed = 0;
-	int i = 0;
-
 	va_list arg;
-	va_start (arg, format);
+	char *str, *buffer;
+	int i = 0, j = 0, len = 0, total = 0;
+	char* (*f)(va_list arg);
 
-	for (format; *format != '\0'; format++)
+	buffer = string_buffer();
+	if (buffer == NULL)
+		return (-1);
+
+	if (format == NULL)
+		return (-1);
+
+	va_start(arg, format);
+
+
+	while (format[i] != '\0')
 	{
-		while (*format != '%')
+		if (format[i] != '%')
 		{
-			putchar(*format);
-			format++;
+			len = buffer_overflow(buffer, len);
+			buffer[len] = format[i];
+			len++;
+			i++;
+			total++;
 		}
-		format++;
-
-		switch (*format)
+		else
 		{
-			case 'c': i = va_arg(arg, int);
-					putchar(i);
-					break;
-			case 'd': i = va_arg(arg, int);
-					if (i<0)
+			i++;
+			if (format[i] == '\0')
+			{
+				va_end(arg);
+				free(buffer);
+				return (-1);
+			}
+
+			if (format[i] == '%')
+			{
+				len = buffer_overflow(buffer, len);
+				buffer[len] = format[i];
+				len++;
+				total++;
+			}
+			else
+			{
+				f = select_func(format[i]);
+				if (f == NULL)
+				{
+					len = buffer_overflow(buffer, len);
+					buffer[len] = '%';
+					total++;
+					buffer[len] = format[i];
+					total++;
+				}
+				else
+				{
+					str = f(arg);
+					if (str == NULL)
 					{
-						i = -i;
-						putchar('-');
+						va_end(arg);
+						free(buffer);
+						return (-1);
 					}
-					puts(convert(i, 10));
-					break;
-			case 's': i = va_arg(arg, char *);
-					puts(i);
-					break;
-			case 'i': i = va_arg(arg, int);
-					puts(i);
-					break;
 
+					if (format[i] == 'c' && str[0] == '\0')
+					{
+						len = buffer_overflow(buffer, len);
+						buffer[len] = '\0';
+						len++;
+						total++;
+					}
+
+					while (str[j] != '\0')
+					{
+						len = buffer_overflow(buffer, len);
+						buffer[len] = str[j];
+						len++;
+						total++;
+						j++;
+					}
+					free(str);
+				}
+			}
+			i++;
 		}
-	}
-	va_end(arg);
 
-	return (n_displayed);
+	}
+
+	realloc_buffer(buffer, len, arg);
+	return (total);
 }
